@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Maktab 112</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <main class="min-h-[100vh] py-20 flex flex-col justify-center items-center bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90%">
+        <h1 class="font-bold text-7xl text-slate-900">{{ name }}</h1>
+        <div class="mt-10 text-red-500 text-8xl text-center grid grid-cols-4 gap-10">
+        {# {% for number in numbers %}#}
+        {#    <div class="rounded-lg backdrop-blur-lg bg-black/30 text-white font-bold p-20">{{ number }}</div>#}
+        {# {% endfor %}#}
+         {% for number in numbers %}
+{#             {% if number|divisibleby:"2" %}#}
+{#                <div class="rounded-lg backdrop-blur-lg bg-blue-700/30 text-white font-bold p-20">{{ number }}</div>#}
+{#             {% else %} #}
+{#                <div class="rounded-lg backdrop-blur-lg bg-red-600/60 text-white font-bold p-20">{{ number }}</div>#}
+{#             {% endif %}#}
+             <div class="rounded-lg backdrop-blur-lg {% if number|divisibleby:"2" %}bg-blue-600/90{% else %}bg-red-600/90{% endif %} text-white font-bold p-20">{{ number }}</div>
+         {% endfor %}
+        </div>
+    </main>
+</body>
+</html>

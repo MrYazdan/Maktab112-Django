@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Maktab 112</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <main class="min-h-[100vh] py-20 flex flex-col justify-center items-center bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90%">
+        <h1 class="font-bold text-7xl text-slate-900">محصولات</h1>
+        <div class="mt-10 text-red-500 text-8xl text-center grid grid-cols-4 gap-10">
+            {% for product in products %}
+             <div class="rounded-lg hover:bg-black/70 transition cursor-pointer backdrop-blur-lg bg-black/30 gap-6 text-white font-bold p-20 flex flex-col">
+                 <strong class="block text-2xl">{{ product.name }}</strong>
+                <span class="block w-full text-center text-yellow-500 text-4xl">{{ product.price }}</span>
+             </div>
+            {% endfor %}
+        </div>
+    </main>
+</body>
+</html>
