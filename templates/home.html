@@ -1,5 +1,72 @@
 {% extends "_base.html" %}
 {% block title %}{{ block.super }} | Home{% endblock %}
 {% block content %}
-	<h1 class="text-center text-9xl font-bold mt-20 text-zinc-600">Maktab Shop</h1>
+	<div id="loading" class="inset-0 !hidden backdrop-blur-lg absolute flex justify-center items-center">
+		<span class="loading block loading-spinner text-info loading-lg"></span>
+	</div>
+	<h1 id="title" class="text-center text-9xl font-bold mt-20 text-zinc-600">Maktab Shop</h1>
+	<div class="mx-auto w-10/12 p-8 grid grid-cols-5 gap-3" id="main">
+		<div class="col-span-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci alias aliquid, aperiam, architecto consequatur cum dicta dignissimos error illum iusto modi, molestias neque nisi pariatur quae recusandae sapiente sint vel.</div>
+	</div>
+	<hr>
+	<button class="py-4 px-8 text-5xl block mx-auto w-6/12">Change it 👽</button>
+{% endblock %}
+{% block extra_body %}
+	<script>
+		const titleEl = document.querySelector("#title");
+		const paragraphEl = document.querySelector("#main");
+		const buttonEl = document.querySelector('button');
+
+		function changeLoadingState() {
+			document.querySelector('#loading').classList.toggle("!hidden")
+		}
+
+		// document.querySelector('button').addEventListener("click", () => {
+		// 	titleEl.innerText = "Hacked :)";
+		// 	paragraphEl.innerText = "Bye Bye Bye Baby 🫥"
+		// })
+
+		// 2)
+		// buttonEl.addEventListener('click', () => {
+		// 	fetch("https://icanhazip.com/")
+		// 			.then(res => res.text())
+		// 			.then(text => titleEl.innerText = text)
+		// })
+
+		// 3)
+		// buttonEl.addEventListener('click', () => {
+		// 	fetch("https://icanhazip.com/")
+		// 		.then(async res => buttonEl.innerText = await res.text())
+		// })
+
+		// 4)
+		buttonEl.addEventListener('click', () => {
+			changeLoadingState();
+			console.log("Before")
+
+			fetch("https://jsonplaceholder.typicode.com/users")
+				.then(async res => {
+					const users = await res.json();
+					let usersObjects = "";
+
+					for (const user of users){
+						const el =
+								"<div class='rounded-lg border-2 border-zinc-500 bg-gray-100 p-5'>" +
+								'<h2 class="text-center">' + user.name + '</h2>'+
+								'<hr>'+
+								'<strong class="block">Username: ' + user.username + '</strong>' +
+								'</div>'
+
+						usersObjects += el;
+					}
+
+					paragraphEl.innerHTML = usersObjects;
+
+					changeLoadingState();
+				})
+
+			console.log("After")
+		})
+
+	</script>
 {% endblock %}
