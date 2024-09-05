@@ -8,12 +8,21 @@
     <body>
         {% include "components/header.html" %}
         
-        <main class="max-w-[1920px] mt-16 py-5 mx-auto min-h-[80vh]">
+        <main x-data="{ loading: false }" class="max-w-[1920px] mt-16 py-5 mx-auto min-h-[80vh]">
+            <div id="loading" class="inset-0 z-[9999] backdrop-blur-lg fixed flex justify-center items-center" :style="loading ? '' : 'display: none !important'">
+                <span class="loading block loading-spinner text-info loading-lg"></span>
+            </div>
             {% block content %}{% endblock %}
         </main>
         
         {% include 'components/footer.html' %}
-        
+
+        <script>
+           // function changeLoadingState() {
+           //     document.querySelector('#loading').classList.toggle("!hidden")
+           // }
+           
+        </script>
         {% block extra_body %}{% endblock %}
     </body>
 </html>

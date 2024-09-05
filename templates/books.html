@@ -1,0 +1,102 @@
+{% extends "_base.html" %}
+{% block content %}
+    <section x-data="books_data">
+    <h1 class="text-center border-b-4 border-zinc-100 pb-10 text-6xl font-bold mt-20 text-zinc-600">Books</h1>
+    <div id="book_main" dir="rtl" class="grid grid-cols-3 justify-center items-center gap-6">
+        <template x-for="book in books">
+            <div class="card bg-base-100 w-96 shadow-xl">
+                <div class="card-body">
+                    <h2 class="card-title"><span class="card-title" x-text="book.title"></span>
+                        <div class="badge badge-secondary">NEW</div>
+                    </h2>
+                    <span class="block font-bold animate-pulse" x-text="book.price"></span>
+                </div>
+            </div>
+        </template>
+    </div>
+    <form @submit.prevent="addBook()" x-ref="book_form" id="add_book_form" method="POST" class="mt-10 mx-auto block w-6/12">
+        {% csrf_token %}
+        <span class="text-6xl block py-5 font-bold text-center">Add Book</span>
+        <label class="input input-bordered flex items-center gap-2">
+            Name
+            <input x-model="name" name="name" required type="text" class="grow placeholder:text-white/10"
+                   placeholder="Your Book"/>
+        </label>
+        <label class="input input-bordered flex items-center gap-2">
+            Price
+            <input x-model="price" name="price" required type="number" class="grow placeholder:text-white/10"
+                   placeholder="10000"/>
+        </label>
+        <button type="submit" class="btn block mt-5 btn-outline btn-success">Success</button>
+    </form>
+    </section>
+{% endblock %}
+{% block extra_body %}
+    <script>
+        {#const formEl = document.querySelector("#add_book_form");#}
+        {#const bookMainEl = document.querySelector("#book_main");#}
+
+        //formEl.addEventListener("submit", (e) => {
+        //    changeLoadingState();
+        //    e.preventDefault();
+        //
+        //    const data = new FormData(formEl);
+        //
+        //    const dataObject = {};
+        //    data.forEach((v, k) => dataObject[k] = v)
+        //
+        //setTimeout(() => {
+        //    fetch(formEl.action, {
+        //        method: 'POST',
+        //        body: data
+        //    }).then(async res => {
+        //        await res.text()
+        //        if (res.status === 201) {
+        //            bookMainEl.innerHTML += `
+        //        <div class="card bg-base-100 w-96 shadow-xl">
+        //            <div class="card-body">
+        //                <h2 class="card-title">
+        //                    ${dataObject['name']}
+        //                    <div class="badge badge-secondary">NEW</div>
+        //                </h2>
+        //                <span class="block font-bold animate-pulse">${dataObject['price']}</span>
+        //            </div>
+        //        </div>
+        //    `
+        //        }
+        //    })
+        //        .catch(e => alert("Error !"))
+        //        .finally(() => changeLoadingState())
+        //},3000)})
+        
+        
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('books_data', () => ({
+            name: '',
+            price: null,
+            books: [
+                {% for book in books %}
+                    {title: '{{ book.title }}', price: {{ book.price }}},
+                {% endfor %}
+            ],
+
+            addBook() {
+                const data = new FormData(this.$refs.book_form);
+
+                fetch(this.$refs.book_form.action, {
+                    method: 'POST',
+                    body: data
+                }).then(async res => {
+                    await res.text()
+                    if (res.status === 201) {
+                        this.books.push({title: this.name, price: this.price})
+                        this.name = ''
+                        this.price = null
+                    }
+                })
+                    .catch(e => alert("Error !"))
+            }
+        }))
+    })
+    </script>
+{% endblock %}
