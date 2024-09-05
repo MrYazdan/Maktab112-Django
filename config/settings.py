@@ -27,17 +27,22 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 # Application definition
-
 INSTALLED_APPS = [
+    # default apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # My applications:
     "products",
     "core",
-    "book"
+    "book",
+
+    # third-party :
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
