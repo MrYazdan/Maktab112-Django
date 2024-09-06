@@ -10,6 +10,9 @@ class Profile(models.Model):
 class Author(models.Model):
     name = models.CharField(max_length=100)
 
+    def __str__(self):
+        return f"<{self.id} - {self.name}>"
+
 
 class Book(models.Model):
     title = models.CharField(max_length=180, blank=False)
@@ -33,3 +36,13 @@ class Category(models.Model):
 
     def __str__(self):
         return f"{self.name}"
+
+
+class Reader(models.Model):
+    first_name = models.CharField(max_length=120)
+    last_name = models.CharField(max_length=120)
+    age = models.PositiveIntegerField()
+
+    @property
+    def fullname(self):
+        return f"{self.first_name} {self.last_name}"
