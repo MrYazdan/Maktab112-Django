@@ -6,26 +6,32 @@
         <template x-for="book in books">
             <div class="card bg-base-100 w-96 shadow-xl">
                 <div class="card-body">
-                    <h2 class="card-title"><span class="card-title" x-text="book.title"></span>
-                        <div class="badge badge-secondary">NEW</div>
+                    <template x-if="book.cover">
+                        <img :src="book.cover" alt="..." class="block m-4">
+                    </template>
+                    <h2 class="card-title" style="direction: ltr"><span class="card-title" x-text="book.title"></span>
                     </h2>
                     <span class="block font-bold animate-pulse" x-text="book.price"></span>
                 </div>
             </div>
         </template>
     </div>
-    <form @submit.prevent="addBook()" x-ref="book_form" id="add_book_form" method="POST" class="mt-10 mx-auto block w-6/12">
+    <form enctype="multipart/form-data" @submit.prevent="addBook()" x-ref="book_form" id="add_book_form" method="POST" class="mt-10 mx-auto block w-6/12">
         {% csrf_token %}
         <span class="text-6xl block py-5 font-bold text-center">Add Book</span>
         <label class="input input-bordered flex items-center gap-2">
             Name
-            <input x-model="name" name="name" required type="text" class="grow placeholder:text-white/10"
+            <input x-model="name" name="title" required type="text" class="grow placeholder:text-white/10"
                    placeholder="Your Book"/>
         </label>
         <label class="input input-bordered flex items-center gap-2">
             Price
             <input x-model="price" name="price" required type="number" class="grow placeholder:text-white/10"
                    placeholder="10000"/>
+        </label>
+        <label class="input input-bordered flex items-center gap-2">
+            Cover
+            <input x-model="cover" name="cover_image" required type="file" class="grow placeholder:text-white/10" />
         </label>
         <button type="submit" class="btn block mt-5 btn-outline btn-success">Success</button>
     </form>
@@ -74,22 +80,24 @@
         Alpine.data('books_data', () => ({
             name: '',
             price: null,
+            cover: null,
             books: [
                 {% for book in books %}
-                    {title: '{{ book.title }}', price: {{ book.price }}},
+                    {title: '{{ book.title }}', price: {{ book.price }}, cover: '{% if book.cover_image %}{{ book.cover_image.url }}{% else %}{% endif %}'},
                 {% endfor %}
             ],
 
             addBook() {
                 const data = new FormData(this.$refs.book_form);
 
-                fetch(this.$refs.book_form.action, {
+                fetch("{% url 'books_list_create' %}", {
                     method: 'POST',
                     body: data
                 }).then(async res => {
-                    await res.text()
+                    const data = await res.json()
+                    console.log(data)
                     if (res.status === 201) {
-                        this.books.push({title: this.name, price: this.price})
+                        this.books.push({title: this.name, price: this.price, cover: data.cover_image})
                         this.name = ''
                         this.price = null
                     }

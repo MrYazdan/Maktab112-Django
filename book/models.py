@@ -16,16 +16,19 @@ class Author(models.Model):
 
 class Book(models.Model):
     title = models.CharField(max_length=180, blank=False)
-    published_date = models.DateField()
+    published_date = models.DateField(null=True)
     price = models.FloatField(validators=[
         MinValueValidator(0)
     ])
-    authors = models.ManyToManyField(Author)
+    authors = models.ManyToManyField(Author, blank=True)
     is_available = models.BooleanField(default=True)
     cover_image = models.ImageField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    categories = models.ManyToManyField("Category")
+    categories = models.ManyToManyField("Category", blank=True)
+
+    def __str__(self):
+        return self.title
 
 
 class Category(models.Model):

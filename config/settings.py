@@ -76,8 +76,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-
-
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
@@ -87,7 +85,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -118,12 +115,22 @@ USE_I18N = True
 
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.1/howto/static-files/
-
-STATIC_URL = 'static/'
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# File (Data) Serving:
+STATIC_URL = 'static/'
+STATIC_ROOT_PATH = BASE_DIR / "storage/static"  # TODO: Custom key !
+
+if DEBUG:
+    STATICFILES_DIRS = [
+        STATIC_ROOT_PATH,
+    ]
+else:
+    STATIC_ROOT = STATIC_ROOT_PATH
+
+
+MEDIA_URL = 'media/'
+MEDIA_ROOT = BASE_DIR / 'storage/media'
