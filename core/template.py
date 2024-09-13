@@ -3,8 +3,6 @@ def link_creator(request, path):
 
 
 def menu_context_processor(request):
-    print(request.path)
-
     return {
         "menu": [
             dict(title="Home", link=link_creator(request, "/")),

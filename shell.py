@@ -5,9 +5,9 @@ import logging
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
 django.setup()
 
-logger = logging.getLogger('django.db.backends')
-logger.setLevel(logging.DEBUG)
-logger.addHandler(logging.StreamHandler())
+# logger = logging.getLogger('django.db.backends')
+# logger.setLevel(logging.DEBUG)
+# logger.addHandler(logging.StreamHandler())
 
 from book.models import Author, Book, Category, Reader  # noqa:E402
 
@@ -109,4 +109,14 @@ from book.models import Author, Book, Category, Reader  # noqa:E402
 # print(*Reader.objects.annotate(fullname=Concat(F("first_name"), V(" "), F("last_name"))).values(), sep="\n")
 
 # distinct
-print(Reader.objects.distinct())
+# print(Reader.objects.distinct())
+
+# Create user:
+from django.contrib.auth.models import User
+
+# user = User.objects.create(username="maktab_u1", password="123")  # Warning !!!
+# user.set_password("123")
+# user.save()
+
+# Best P:
+user = User.objects.create_user("maktab_u2", password="123")

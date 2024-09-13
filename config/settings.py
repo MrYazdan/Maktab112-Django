@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     "book",
 
     # third-party :
-    'rest_framework'
+    'rest_framework',
+    "account"
 ]
 
 MIDDLEWARE = [

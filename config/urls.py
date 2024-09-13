@@ -26,7 +26,9 @@ urlpatterns = [
     path('products/', products),
     path('authors/', book_views.author_list_creation),
     path('', include('book.urls')),
-    path('', include('pages.urls'))
+    path('', include('pages.urls')),
+    path('auth/', include("django.contrib.auth.urls")),
+    path('account/', include("account.urls"))
 ]
 
 if settings.DEBUG:

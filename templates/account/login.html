@@ -1,0 +1,22 @@
+{% extends "_base.html" %}
+{% block title %}{{ block.super }} | Login{% endblock %}
+
+{% block content %}
+    <section class="w-full">
+        <h1 class="text-center mb-6 text-3xl">Login</h1>
+        <form method="POST" class="block mx-auto w-full sm:w-6/12" id="mainForm">
+            {% csrf_token %}
+            <label class="input input-bordered flex items-center gap-2">
+                Username
+                <input name="username" required type="text" class="grow placeholder:text-white/10"
+                       placeholder="Please enter your username ..."/>
+            </label>
+            <label class="input input-bordered flex items-center gap-2 my-4">
+                Password
+                <input name="password" required type="password" class="grow placeholder:text-white/10"
+                       placeholder="Please enter your password ..."/>
+            </label>
+            <input type="submit" value="Sign-in" class="cursor-pointer block w-full border border-gray-300 rounded-lg py-4">
+        </form>
+    </section>
+{% endblock %}

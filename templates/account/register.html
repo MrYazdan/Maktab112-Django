@@ -1,0 +1,66 @@
+{% extends "_base.html" %}
+{% block title %}{{ block.super }} | Register{% endblock %}
+
+{% block content %}
+    <section class="w-full">
+        <h1 class="text-center mb-6 text-3xl">Register</h1>
+        <form method="POST" class="block mx-auto w-full sm:w-6/12" id="RegisterForm">
+            {% csrf_token %}
+            <label class="input input-bordered flex items-center gap-2">
+                Username
+                <input name="username" required type="text" class="grow placeholder:text-white/10"
+                       placeholder="Please enter your username ..."/>
+            </label>
+            <label class="input input-bordered flex items-center gap-2 my-4">
+                Password
+                <input name="password" required type="password" class="grow placeholder:text-white/10"
+                       placeholder="Please enter your password ..."/>
+            </label>
+            <label class="input input-bordered flex items-center gap-2 my-4">
+                Confirm Password
+                <input name="confirm_password" required type="password" class="grow placeholder:text-white/10"
+                       placeholder="Please enter confirm password ..."/>
+            </label>
+            <input type="submit" value="Sign-out"
+                   class="cursor-pointer block w-full border border-gray-300 rounded-lg py-4">
+        </form>
+    </section>
+{% endblock %}
+
+{% block extra_body %}
+    <script>
+        //Swal.fire({
+        //  title: 'Error!',
+        //  text: 'Do you want to continue',
+        //  icon: 'error',
+        //  confirmButtonText: 'Cool'
+        //})
+
+        document.querySelector("form#RegisterForm").addEventListener('submit', (e) => {
+            e.preventDefault()
+
+            const data = new FormData(e.target);
+
+            fetch(e.target.action, {method: 'POST', body: data})
+                .then(async res => {
+                    if (res.status !== 201) throw res
+
+                    Swal.fire({
+                        title: 'Success',
+                        text: 'Registration has been successfully !',
+                        icon: 'success',
+                        willClose: () => {
+                            window.location.replace("{% url 'login' %}")
+                        }
+                    })
+                })
+                .catch(async err => {
+                    Swal.fire({
+                        title: 'Error',
+                        text: await err.text(),
+                        icon: 'error',
+                    })
+                })
+        })
+    </script>
+{% endblock %}
