@@ -15,15 +15,15 @@ class BookSerializer(serializers.ModelSerializer):
         model = Book
         fields = "__all__"
 
-    def to_representation(self, instance):
-        data = super().to_representation(instance)
-        from uuid import uuid4
-
-        return dict(
-            id=uuid4().hex,
-            name=data["title"],
-            price=data['price'],
-        )
+    # def to_representation(self, instance):
+    #     data = super().to_representation(instance)
+    #     from uuid import uuid4
+    #
+    #     return dict(
+    #         id=uuid4().hex,
+    #         name=data["title"],
+    #         price=data['price'],
+    #     )
 
 
 

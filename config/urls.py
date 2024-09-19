@@ -24,7 +24,7 @@ from book import views as book_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('products/', products),
-    path('authors/', book_views.author_list_creation),
+    # path('authors/', book_views.author_list_creation),
     path('', include('book.urls')),
     path('', include('pages.urls')),
     path('auth/', include("django.contrib.auth.urls")),

@@ -4,7 +4,7 @@
     <h1 class="text-center border-b-4 border-zinc-100 pb-10 text-6xl font-bold mt-20 text-zinc-600">Books</h1>
     <div id="book_main" dir="rtl" class="grid grid-cols-3 justify-center items-center gap-6">
         <template x-for="book in books">
-            <div class="card bg-base-100 w-96 shadow-xl">
+            <a :href="book.url" class="card bg-base-100 transition hover:bg-base-200 cursor-pointer w-96 shadow-xl">
                 <div class="card-body">
                     <template x-if="book.cover">
                         <img :src="book.cover" alt="..." class="block m-4">
@@ -13,7 +13,7 @@
                     </h2>
                     <span class="block font-bold animate-pulse" x-text="book.price"></span>
                 </div>
-            </div>
+            </a>
         </template>
     </div>
     <form enctype="multipart/form-data" @submit.prevent="addBook()" x-ref="book_form" id="add_book_form" method="POST" class="mt-10 mx-auto block w-6/12">
@@ -83,7 +83,12 @@
             cover: null,
             books: [
                 {% for book in books %}
-                    {title: '{{ book.title }}', price: {{ book.price }}, cover: '{% if book.cover_image %}{{ book.cover_image.url }}{% else %}{% endif %}'},
+                    {
+                        title: '{{ book.title }}',
+                        price: {{ book.price }}, 
+                        cover: '{% if book.cover_image %}{{ book.cover_image.url }}{% else %}{% endif %}',
+                        url: '{% url "book_detail" pk=book.id %}'
+                    },
                 {% endfor %}
             ],
 

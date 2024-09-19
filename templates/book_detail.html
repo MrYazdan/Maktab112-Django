@@ -1,0 +1,16 @@
+{% extends "_base.html" %}
+{% block content %}
+    <section>
+    <div id="book_main" dir="rtl" class="grid grid-cols-1 justify-center items-center gap-6">
+            <div class="card bg-base-100 w-96 shadow-xl">
+                <div class="card-body">
+                    {% if book.cover_image %}
+                    	<img src="{{ book.cover_image.url }}" alt="..." class="block m-4">
+                    {% endif %}
+                    <h2 class="card-title" style="direction: ltr"><span class="card-title">{{ book.title }}</span></h2>
+                    <span class="block font-bold animate-pulse">{{ book.price }}</span>
+                </div>
+            </div>
+    </div>
+    </section>
+{% endblock %}
