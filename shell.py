@@ -9,7 +9,7 @@ django.setup()
 # logger.setLevel(logging.DEBUG)
 # logger.addHandler(logging.StreamHandler())
 
-from book.models import Author, Book, Category, Reader  # noqa:E402
+from book.models import Author, Book, BookCover, NewestBook, Category, Reader  # noqa:E402
 
 # a1 = Author.objects.get(id=1)
 # a1.name = "Aliram"
@@ -120,3 +120,27 @@ from book.models import Author, Book, Category, Reader  # noqa:E402
 
 # Best P:
 # user = User.objects.create_user("maktab_u2", password="123")
+
+# print(Book.objects.get(id=1).images.all().query)
+
+# Book.objects.get(id=9).images.add(...)
+
+# from django.core.files.images import ImageFile  # noqa:E402
+
+# book = Book.objects.get(id=9)
+# image_file = ImageFile(open("/home/yazdan/Desktop/Maktab112-Django/storage/media/ai.jpeg", "rb"))
+# cover = BookCover.objects.create(src=" ", alt="ai", book=book)
+# cover.src.save("ai.jpeg", image_file, save=True)
+
+# print(*BookCover._meta.get_fields(), sep="\n")
+# core.Image.id
+# core.Image.src
+# core.Image.alt
+# book.BookCover.image_ptr
+# book.BookCover.book
+
+# print(Book.objects.all())
+# print(NewestBook.objects.all())
+
+# NewestBook.objects.create(title="daftarche nim sokhte ...", price=50000, published_date="2015-05-12")
+NewestBook.objects.create(title="Mane digare ma", published_date="2015-05-12")
